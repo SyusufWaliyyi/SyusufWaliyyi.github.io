@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shamsuddeen Yusuf | Data Analyst and Scientist</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:    #0d1117;
+      --navy2:   #161b22;
+      --navy3:   #1f2937;
+      --gold:    #c9a84c;
+      --gold2:   #e8c96a;
+      --white:   #f0f4f8;
+      --muted:   #8b9ab0;
+      --border:  rgba(201,168,76,0.18);
+      --card-bg: rgba(22,27,34,0.85);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      top: -100px; right: -100px; pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1rem;
+      opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s;
+    }
+    .hero-name span { color: var(--gold); font-style: italic; }
+    .hero-title {
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.7s ease forwards 0.35s;
+    }
+    .hero-title strong { color: var(--white); font-weight: 500; }
+    .hero-bio {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0; animation: fadeUp 0.7s ease forwards 0.45s;
+    }
+    .hero-cta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 500;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      border: 1px solid var(--gold);
+    }
+    .btn-primary:hover { background: var(--gold2); border-color: var(--gold2); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); transform: translateY(-2px); }
+
+    /* avatar */
+    .hero-avatar {
+      position: absolute; right: 4rem; top: 50%;
+      transform: translateY(-50%);
+      opacity: 0; animation: fadeIn 1s ease forwards 0.6s;
+    }
+    .avatar-ring {
+      width: 260px; height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .avatar-ring::before {
+      content: '';
+      position: absolute; inset: -8px;
+      border: 1px dashed rgba(201,168,76,0.2);
+      border-radius: 50%;
+      animation: spin 30s linear infinite;
+    }
+    .avatar-inner {
+      width: 220px; height: 220px;
+      background: linear-gradient(135deg, var(--navy2), var(--navy3));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      border: 1px solid var(--border);
+    }
+    .hero-stats {
+      position: absolute; bottom: 3rem; left: 4rem;
+      display: flex; gap: 3rem;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.7s;
+    }
+    .stat-item { }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem; color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 4rem; position: relative; }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .section-line {
+      width: 48px; height: 2px;
+      background: var(--gold);
+      margin-top: 1.2rem;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 4rem;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--navy); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .project-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-4px); }
+    .project-card:hover::before { opacity: 1; }
+    .project-card.featured { grid-column: span 2; border-color: rgba(201,168,76,0.3); }
+    .project-card.featured::before { opacity: 0.5; }
+    .project-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--gold);
+      opacity: 0.6; margin-bottom: 1rem;
+    }
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem; color: var(--white);
+      margin-bottom: 0.75rem; line-height: 1.3;
+    }
+    .project-desc {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 1.5rem;
+    }
+    .project-tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--gold); text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: gap 0.2s;
+    }
+    .project-link:hover { gap: 0.7rem; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--navy2); }
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .skill-group { margin-bottom: 2rem; }
+    .skill-group-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .skill-pill {
+      font-size: 0.82rem;
+      color: var(--white);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .skill-pill:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: rgba(201,168,76,0.3);
+      color: var(--gold);
+    }
+    .tools-visual {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: all 0.25s;
+    }
+    .tool-card:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.04); }
+    .tool-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .tool-name { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+
+    /* ── CERTIFICATIONS ── */
+    #certifications { background: var(--navy); }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .cert-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      transition: all 0.25s;
+    }
+    .cert-card:hover { border-color: rgba(201,168,76,0.35); transform: translateX(4px); }
+    .cert-badge {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .cert-name { font-size: 0.88rem; color: var(--white); font-weight: 500; margin-bottom: 0.25rem; line-height: 1.4; }
+    .cert-issuer { font-size: 0.76rem; color: var(--gold); }
+    .cert-date { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── EDUCATION ── */
+    #education { background: var(--navy2); }
+    .edu-timeline { position: relative; }
+    .edu-timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--gold), transparent);
+    }
+    .edu-item {
+      padding-left: 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .edu-item::before {
+      content: '';
+      position: absolute; left: -5px; top: 8px;
+      width: 11px; height: 11px;
+      background: var(--gold);
+      border-radius: 50%;
+      border: 2px solid var(--navy2);
+    }
+    .edu-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--gold);
+      letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    }
+    .edu-degree {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem; color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+    .edu-inst { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .edu-grade {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 0.2rem 0.7rem;
+      border-radius: 2px;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy); }
+    .contact-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+    }
+    .contact-intro {
+      font-size: 1rem; color: var(--muted); line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.25s;
+      color: inherit;
+    }
+    .contact-link:hover { border-color: rgba(201,168,76,0.4); transform: translateX(4px); }
+    .contact-link-icon {
+      width: 36px; height: 36px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-link-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .contact-link-value { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+
+    /* contact form */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-size: 0.72rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .form-input, .form-textarea {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.25s;
+      outline: none;
+      width: 100%;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      align-self: flex-start;
+      background: var(--gold); color: var(--navy);
+      border: none; padding: 0.85rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 600;
+      letter-spacing: 0.06em;
+      border-radius: 3px; cursor: pointer;
+      transition: all 0.25s;
+    }
+    .form-submit:hover { background: var(--gold2); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: var(--muted);
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 7rem 1.5rem 4rem; }
+      .hero-avatar { display: none; }
+      .skills-layout, .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .project-card.featured { grid-column: span 1; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .divider { margin: 0 1.5rem; }
+      .hero-stats { left: 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-name { font-size: 2.5rem; }
+      .tools-visual { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">SY.</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">// Data Analyst · Nigeria</p>
+    <h1 class="hero-name">Shamsuddeen<br><span>Yusuf</span></h1>
+    <p class="hero-title">
+      <strong>Data Analyst &nbsp;·&nbsp; Data Scientist &nbsp;·&nbsp; Machine Learning &nbsp;·&nbsp; Business Intelligence</strong>
+    </p>
+    <p class="hero-bio">
+      Dual-certified Professional Data Scientist & Data Analyst (DataCamp, 2026) with a First Class engineering background. I turn complex datasets into clear, actionable insights using SQL, Python, and Power BI — with a focus on real-world impact across public health and development in Africa.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View My Work →</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-avatar">
+    <div class="avatar-ring">
+      <div class="avatar-inner">SY</div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-number">30+</div>
+      <div class="stat-label">GitHub Repos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">15</div>
+      <div class="stat-label">Certifications</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">72K+</div>
+      <div class="stat-label">Records Analysed</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <p class="section-label">// 01 — Portfolio</p>
+    <h2 class="section-title">Selected Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card featured reveal reveal-delay-1">
+      <p class="project-number">01 — FLAGSHIP PROJECT</p>
+      <h3 class="project-title">Nigeria Meningitis Surveillance Analysis</h3>
+      <p class="project-desc">End-to-end analysis of 72,695 patient records from a national disease registry. Designed a normalised MySQL database, wrote multi-table SQL queries for state-level and demographic insights, cleaned and modelled data in Python, built a logistic regression mortality risk predictor, and developed a 3-page interactive Power BI dashboard with risk profiling by state, gender, age group, and settlement type.</p>
+      <div class="project-tags">
+        <span class="tag">MySQL</span>
+        <span class="tag">Python</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">Scikit-Learn</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">Logistic Regression</span>
+      </div>
+      <a href="https://github.com/SyusufWaliyyi/nigeria-meningitis-surveillance" class="project-link" target="_blank">View Repository →</a>
+    </div>
+
+    <div class="project-card reveal reveal-delay-2">
+      <p class="project-number">02</p>
+      <h3 class="project-title">Exploratory Data Analysis Projects</h3>
+      <p class="project-desc">A collection of EDA projects uncovering patterns and trends in real-world datasets, with visual storytelling using Matplotlib and Seaborn.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">Seaborn</span>
+        <span class="tag">Matplotlib</span>
+      </div>
+      <a href="https://github.com/SyusufWaliyyi" class="project-link" target="_blank">View Repository →</a>
+    </div>
+
+    <div class="project-card reveal reveal-delay-3">
+      <p class="project-number">03</p>
+      <h3 class="project-title">Machine Learning — Supervised Models</h3>
+      <p class="project-desc">Classification and regression pipelines built with Scikit-Learn, including logistic regression, decision trees, and model evaluation with ROC-AUC and confusion matrices.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Scikit-Learn</span>
+        <span class="tag">ROC-AUC</span>
+        <span class="tag">Classification</span>
+      </div>
+      <a href="https://github.com/SyusufWaliyyi" class="project-link" target="_blank">View Repository →</a>
+    </div>
+
+    <div class="project-card reveal reveal-delay-1">
+      <p class="project-number">04</p>
+      <h3 class="project-title">Power BI Dashboards</h3>
+      <p class="project-desc">Interactive business intelligence dashboards covering KPIs, trends, demographic breakdowns, and risk profiling across various domains.</p>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">DAX</span>
+        <span class="tag">Data Modelling</span>
+      </div>
+      <a href="https://github.com/SyusufWaliyyi" class="project-link" target="_blank">View Repository →</a>
+    </div>
+
+    <div class="project-card reveal reveal-delay-2">
+      <p class="project-number">05</p>
+      <h3 class="project-title">SQL Scripts & Queries</h3>
+      <p class="project-desc">A library of SQL scripts covering schema design, multi-table joins, aggregations, subqueries, and real-world analytical queries on health and business datasets.</p>
+      <div class="project-tags">
+        <span class="tag">MySQL</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Schema Design</span>
+        <span class="tag">Joins</span>
+      </div>
+      <a href="https://github.com/SyusufWaliyyi" class="project-link" target="_blank">View Repository →</a>
+    </div>
+
+    <div class="project-card reveal reveal-delay-3">
+      <p class="project-number">06</p>
+      <h3 class="project-title">Python Practice & DataCamp Work</h3>
+      <p class="project-desc">Notebooks from DataCamp professional certification tracks covering data manipulation, statistical analysis, and machine learning fundamentals.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">Statistics</span>
+      </div>
+      <a href="https://github.com/SyusufWaliyyi" class="project-link" target="_blank">View Repository →</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <p class="section-label">// 02 — Expertise</p>
+    <h2 class="section-title">Skills & Tools</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-layout">
+    <div>
+      <div class="skill-group reveal reveal-delay-1">
+        <p class="skill-group-title">Analytics & Modelling</p>
+        <div class="skill-pills">
+          <span class="skill-pill">Exploratory Data Analysis</span>
+          <span class="skill-pill">Statistical Analysis</span>
+          <span class="skill-pill">Predictive Modelling</span>
+          <span class="skill-pill">Regression</span>
+          <span class="skill-pill">Model Evaluation</span>
+          <span class="skill-pill">Feature Engineering</span>
+        </div>
+      </div>
+      <div class="skill-group reveal reveal-delay-2">
+        <p class="skill-group-title">Programming & Data Engineering</p>
+        <div class="skill-pills">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">Scikit-Learn</span>
+          <span class="skill-pill">SciPy</span>
+          <span class="skill-pill">Statsmodels</span>
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">MATLAB</span>
+	  <span class="skill-pill">Power BI</span>
+        </div>
+      </div>
+      <div class="skill-group reveal reveal-delay-3">
+        <p class="skill-group-title">Visualisation & BI</p>
+        <div class="skill-pills">
+          <span class="skill-pill">Power BI</span>
+          <span class="skill-pill">DAX</span>
+          <span class="skill-pill">Matplotlib</span>
+          <span class="skill-pill">Seaborn</span>
+          <span class="skill-pill">Dashboard Design</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="tools-visual reveal reveal-delay-2">
+        <div class="tool-card"><div class="tool-icon">🐍</div><div class="tool-name">Python</div></div>
+        <div class="tool-card"><div class="tool-icon">🗄️</div><div class="tool-name">MySQL</div></div>
+        <div class="tool-card"><div class="tool-icon">📊</div><div class="tool-name">Power BI</div></div>
+        <div class="tool-card"><div class="tool-icon">🤖</div><div class="tool-name">Scikit-Learn</div></div>
+        <div class="tool-card"><div class="tool-icon">📓</div><div class="tool-name">Jupyter</div></div>
+        <div class="tool-card"><div class="tool-icon">📈</div><div class="tool-name">Excel</div></div>
+        <div class="tool-card"><div class="tool-icon">🐼</div><div class="tool-name">Pandas</div></div>
+        <div class="tool-card"><div class="tool-icon">🔢</div><div class="tool-name">NumPy</div></div>
+        <div class="tool-card"><div class="tool-icon">🐙</div><div class="tool-name">GitHub</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <p class="section-label">// 03 — Credentials</p>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="cert-grid">
+
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-badge">🏆</div>
+      <div>
+        <p class="cert-name"><a href="https://www.datacamp.com/certificate/DS0021220828135" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);">Certified Professional Data Scientist</a></p>
+        <p class="cert-issuer">DataCamp</p>
+        <p class="cert-date">Feb 2026</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-badge">🏆</div>
+      <div>
+        <p class="cert-name"><a href="https://www.datacamp.com/certificate/DA0020336138347" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);">Certified Professional Data Analyst</a></p>
+        <p class="cert-issuer">DataCamp</p>
+        <p class="cert-date">Feb 2026</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-badge">🤖</div>
+      <div>
+	<p class="cert-name"><a
+	href="https://www.datacamp.com/skill-verification/AIF0024608786333" 
+target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);">Certified AI Fundamentals</a></p>
+        <p class="cert-issuer">DataCamp</p>
+        <p class="cert-date">Feb 2026</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-badge">📊</div>
+      <div>
+        <p class="cert-name"><a
+	href="https://www.datacamp.com/skill-verification/DL0032182840221" 
+target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);">Certified Data Literacy Professional</a></p>
+        <p class="cert-issuer">DataCamp</p>
+        <p class="cert-date">Jan 2026</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-badge">🐍</div>
+      <div>
+	<p class="cert-name"><a href="https://www.datacamp.com/certificate/PDA0015947272977" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);">Certified Python Data Associate</a></p>
+        <p class="cert-issuer">DataCamp</p>
+        <p class="cert-date">Jan 2026</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-badge">📈</div>
+      <div>
+	<p class="cert-name"><a href="https://www.datacamp.com/certificate/DAA0015706260927" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);">Certified Associate Data Analystt</a></p>
+        <p class="cert-issuer">DataCamp</p>
+        <p class="cert-date">Dec 2025</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-badge">🔬</div>
+      <div>
+       <p class="cert-name"><a href="https://www.datacamp.com/certificate/DSA0013771369706" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);">Certified Associate Data Scientist</a></p>
+        <p class="cert-issuer">DataCamp</p>
+        <p class="cert-date">Sep 2025</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-badge">🌍</div>
+      <div>
+        <p class="cert-name">Data Science & Machine Learning Fellow</p>
+        <p class="cert-issuer">Arewa Data Science Academy</p>
+        <p class="cert-date">Sep 2025</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-badge">🐍</div>
+      <div>
+        <p class="cert-name">Python Programming Language Fellow</p>
+        <p class="cert-issuer">Arewa Data Science Academy</p>
+        <p class="cert-date">Mar 2025</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-badge">💡</div>
+      <div>
+        <p class="cert-name">Master Microsoft Power BI</p>
+        <p class="cert-issuer">ALISON</p>
+        <p class="cert-date">—</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-badge">💡</div>
+      <div>
+        <p class="cert-name">Diploma in Microsoft Power BI for Beginners</p>
+        <p class="cert-issuer">ALISON</p>
+        <p class="cert-date">—</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-badge">📊</div>
+      <div>
+        <p class="cert-name">Excel Fundamentals for Data Analysis</p>
+        <p class="cert-issuer">Coursera — Macquarie University</p>
+        <p class="cert-date">Sep 2025</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-badge">🤖</div>
+      <div>
+        <p class="cert-name">Generative AI</p>
+        <p class="cert-issuer">Out_skill</p>
+        <p class="cert-date">Sep 2025</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-badge">📊</div>
+      <div>
+        <p class="cert-name">Power BI for Beginners</p>
+        <p class="cert-issuer">SimpleLearn (Skillup)</p>
+        <p class="cert-date">Oct 2025</p>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-badge">📈</div>
+      <div>
+        <p class="cert-name">Intermediate Excel Skills for Business Professionals</p>
+        <p class="cert-issuer">Dawib Associate Limited</p>
+        <p class="cert-date">Mar 2022</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <p class="section-label">// 04 — Academic Background</p>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-timeline">
+    <div class="edu-item reveal reveal-delay-1">
+      <p class="edu-year">Expected 2026</p>
+      <h3 class="edu-degree">M.Sc. Control Engineering</h3>
+      <p class="edu-inst">Ahmadu Bello University, Zaria (ABU)</p>
+      <span class="edu-grade">First Class — GPA 4.58 / 5.00</span>
+    </div>
+    <div class="edu-item reveal reveal-delay-2">
+      <p class="edu-year">2017</p>
+      <h3 class="edu-degree">B.Eng. Electrical Engineering</h3>
+      <p class="edu-inst">Kano University of Science and Technology, Wudil (KUST)</p>
+      <span class="edu-grade">First Class — GPA 4.59 / 5.00</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <p class="section-label">// 05 — Get In Touch</p>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-layout">
+    <div>
+      <p class="contact-intro reveal">
+        Open to remote data analyst internships, freelance projects, and collaborations across Africa and beyond. If you have a dataset that needs insight, or a role that needs a sharp analyst — let's talk.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:sywaliyyi@gmail.com" class="contact-link reveal reveal-delay-1">
+          <div class="contact-link-icon">✉️</div>
+          <div>
+            <p class="contact-link-label">Email</p>
+            <p class="contact-link-value">sywaliyyi@gmail.com</p>
+          </div>
+        </a>
+        <a href="https://github.com/SyusufWaliyyi" class="contact-link reveal reveal-delay-2" target="_blank">
+          <div class="contact-link-icon">🐙</div>
+          <div>
+            <p class="contact-link-label">GitHub</p>
+            <p class="contact-link-value">github.com/SyusufWaliyyi</p>
+          </div>
+        </a>
+        <a href="https://wa.me/234807063511968" class="contact-link reveal reveal-delay-3" target="_blank">
+          <div class="contact-link-icon">📱</div>
+          <div>
+            <p class="contact-link-label">WhatsApp</p>
+            <p class="contact-link-value">+234 706 351 1968</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="John Doe" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="john@example.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell me about your project or opportunity..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Shamsuddeen Yusuf — Data Analyst, Nigeria 🇳🇬</span>
+  <span>Built with HTML · Hosted on <a href="https://github.com/SyusufWaliyyi" target="_blank">GitHub Pages</a></span>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── Nav scroll effect ──
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 60 ? '0 4px 24px rgba(0,0,0,0.4)' : 'none';
+  });
+
+  // ── Form submit ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = '#2d6a4f';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      btn.style.color = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+</body>
+</html>
